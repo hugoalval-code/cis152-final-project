@@ -13,7 +13,10 @@ SOURCES += \
     mainwindow.cpp
 
 HEADERS += \
-    mainwindow.h
+    Customer.h \
+    Product.h \
+    mainwindow.h \
+    writetodatabase.h
 
 FORMS += \
     mainwindow.ui
