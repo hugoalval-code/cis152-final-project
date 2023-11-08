@@ -12,6 +12,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp
 
+
 HEADERS += \
     Customer.h \
     Product.h \

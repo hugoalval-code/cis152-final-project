@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "Product.h"
 #include "Customer.h"
+#include "writetodatabase.h"
 #include <QApplication>
 #include <iostream>
 #include <map>
@@ -25,6 +26,14 @@ int main(int argc, char *argv[]) {
     std::cout << cust1.toString() << std::endl;
     std::cout << cust2.toString() << std::endl;
     std::cout << cust3.toString() << std::endl;
+
+
+    try {
+        writeToCustomerDatabase(cust1);
+    }
+    catch (...) {
+        std::cout << "Exception caught!" << std::endl;
+    }
 
     return a.exec();
 }

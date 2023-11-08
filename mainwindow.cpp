@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "Customer.h"
+#include "writetodatabase.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
