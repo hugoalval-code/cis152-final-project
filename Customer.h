@@ -2,39 +2,30 @@
 #define CUSTOMER_H
 
 #include <string>
-
-int CIDCOUNTER = 3001;
+using namespace std;
 
 class Customer {
 private:
     int CustomerID;
-    std::string fName;
-    std::string lName;
-    std::string email;
-
+    string fName;   // Customer's First Name
+    string lName;   // Customer's Last Name
+    string email;   // Customer's Email
 public:
     // Constructor
-    Customer(std::string fName, std::string lName, std::string email) :
-        fName(fName), lName(lName), email(email) {
-        CustomerID = CIDCOUNTER;
-        CIDCOUNTER++;
-    }
+    Customer(int CustomerID, const string &fName, const string &lName, const string &email);
+
     // Getters and Setters
-    void setFirstName(std::string fName) {this->fName = fName;}
-    void setLastName(std::string lName) {this->lName = lName;}
-    void setEmail(std::string email) {this->email = email;}
-    int getCustomerID() {return CustomerID;}
-    std::string getFirstName() {return fName;}
-    std::string getLastName() {return lName;}
-    std::string getEmail() {return email;}
-    // Misc.
-    std::string toString() {
-        std::string str = "";
-        str += "CID: " + std::to_string(CustomerID) + ", ";
-        str += "Name: " + fName + " " + lName + ", ";
-        str += "Email: " + email;
-        return str;
-    }
+    int getCustomerID() const;
+    void setCustomerID(int newCustomerID);
+    string getFName() const;
+    void setFName(const string &newFName);
+    string getLName() const;
+    void setLName(const string &newLName);
+    string getEmail() const;
+    void setEmail(const string &newEmail);
+
+    // Misc Functions
+    string toString();
 };
 
 #endif // CUSTOMER_H

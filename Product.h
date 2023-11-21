@@ -2,46 +2,41 @@
 #define PRODUCT_H
 
 #include <string>
-
-int PIDCOUNTER = 1001;
+#include <sstream>
+using namespace std;
 
 class Product {
 private:
     int ProductID;
-    std::string pName;
-    std::string category;
-    std::string supplier;
+    string pName;
+    string category;
+    string supplier;
     double price;
+
+    string to_string_with_precision(const double value) {
+        std::ostringstream out;
+        out.precision(2);
+        out << fixed << value;
+        return std::move(out).str();
+    }
 public:
     // Constructor
-    Product(std::string pName, std::string category, std::string supplier, double price) {
-        ProductID = PIDCOUNTER;
-        PIDCOUNTER++;
-        this->pName = pName;
-        this->category = category;
-        this->supplier = supplier;
-        this->price = price;
-    }
+    Product(int ProductID, const string &pName, const string &category, const string &supplier, double price);
+
     // Getters and Setters
-    void setProductName(std::string pName) {this->pName = pName;}
-    void setCategory(std::string category) {this->category = category;}
-    void setSupplier(std::string supplier) {this->supplier = supplier;}
-    void setPrice(double price) {this->price = price;}
-    std::string getProductName() {return pName;}
-    std::string getCategory() {return category;}
-    std::string getSupplier() {return supplier;}
-    int getProductID() {return ProductID;}
-    double getPrice() {return price;}
-    // Misc.
-    std::string toString() {
-        std::string str = "";
-        str += "PID: " + std::to_string(ProductID) + ", ";
-        str += "Name: " + pName + ", ";
-        str += "Price: " + std::to_string(price) + ", ";
-        str += "Category: " + category + ", ";
-        str += "Supplier: " + supplier + ", ";
-        return str;
-    }
+    int getProductID() const;
+    void setProductID(int newProductID);
+    string getPName() const;
+    void setPName(const string &newPName);
+    string getCategory() const;
+    void setCategory(const string &newCategory);
+    string getSupplier() const;
+    void setSupplier(const string &newSupplier);
+    double getPrice() const;
+    void setPrice(double newPrice);
+
+    // Misc Functions
+    string toString();
 };
 
 #endif // PRODUCT_H
