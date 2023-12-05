@@ -25,6 +25,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
         customer.h customer.cpp
         product.h product.cpp
+        customerwindow.h customerwindow.cpp customerwindow.ui
+        productwindow.h productwindow.cpp productwindow.ui
+        orderwindow.h orderwindow.cpp orderwindow.ui
+
+
+
 
     )
 # Define target properties for Android with Qt 6 as:

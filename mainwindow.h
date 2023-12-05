@@ -17,11 +17,10 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 private slots:
+    void initializeDatabases();
     void openCustomerWindow();
     void openProductWindow();
     void openOrderWindow();
-    void writeToCDatabase();
-    void writeToPDatabase(Product product);
 private:
     Ui::MainWindow *ui;
 };
