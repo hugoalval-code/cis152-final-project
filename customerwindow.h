@@ -16,7 +16,9 @@ public:
     ~CustomerWindow();
 
 private slots:
+    int getNextIdAvailable();
     void writeToDatabase();
+
 private:
     Ui::CustomerWindow *ui;
 };

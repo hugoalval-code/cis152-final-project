@@ -3,8 +3,7 @@
 
 OrderWindow::OrderWindow(QWidget *parent)
     : QMainWindow(parent)
-    , ui(new Ui::OrderWindow)
-{
+    , ui(new Ui::OrderWindow) {
     ui->setupUi(this);
 }
 

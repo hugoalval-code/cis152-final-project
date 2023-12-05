@@ -62,11 +62,11 @@ void Product::setPrice(double newPrice)
 
 string Product::toString() {
     string productStr = "";
-    productStr += "PID: " + to_string(ProductID) + ", ";
-    productStr += "Name: " + pName + ", ";
-    productStr += "Category: " + category + ", ";
-    productStr += "Supplier: " + supplier + ", ";
-    productStr += "Price: " + to_string_with_precision(price);
+    productStr += to_string(ProductID) + ",";
+    productStr += pName + ",";
+    productStr += category + ",";
+    productStr += supplier + ",";
+    productStr += to_string_with_precision(price);
     return productStr;
 }
 

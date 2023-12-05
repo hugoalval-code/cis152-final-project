@@ -15,6 +15,10 @@ public:
     explicit ProductWindow(QWidget *parent = nullptr);
     ~ProductWindow();
 
+private slots:
+    int getNextIdAvailable();
+    void writeToDatabase();
+
 private:
     Ui::ProductWindow *ui;
 };
