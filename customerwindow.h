@@ -16,6 +16,7 @@ public:
     ~CustomerWindow();
 
 private slots:
+    void showCustomerTable();
     int getNextIdAvailable();
     void writeToDatabase();
 

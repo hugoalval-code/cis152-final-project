@@ -15,6 +15,10 @@ public:
     explicit OrderWindow(QWidget *parent = nullptr);
     ~OrderWindow();
 
+private slots:
+    int getNextIdAvailable();
+    void writeToDatabase();
+
 private:
     Ui::OrderWindow *ui;
 };

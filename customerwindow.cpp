@@ -2,14 +2,34 @@
 #include "customer.h"
 #include "ui_customerwindow.h"
 #include <QFile>
+#include <QTableWidget>
+#include <QTableWidgetItem>
+#include <QHeaderView>
 
 CustomerWindow::CustomerWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::CustomerWindow) {
     ui->setupUi(this);
 
+    showCustomerTable();
+
     connect(ui->back_btn, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->add_btn, SIGNAL(clicked()), this, SLOT(writeToDatabase()));
+}
+
+void CustomerWindow::showCustomerTable() {
+    ui->customerTable->setHorizontalHeaderLabels({"CustomerID", "FirstName", "LastName", "Email"});
+    ui->customerTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    ui->customerTable->setRowCount(20);
+
+    for (int row = 0; row < 20; ++row) {
+        for (int col = 0; col < 4; ++col) {
+            QTableWidgetItem *item = new QTableWidgetItem(QString("Data %1-%2").arg(row + 1).arg(col + 1));
+            ui->customerTable->setItem(row, col, item);
+        }
+    }
+
+    ui->customerTable->show();
 }
 
 int CustomerWindow::getNextIdAvailable() {

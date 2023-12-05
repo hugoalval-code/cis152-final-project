@@ -1,5 +1,4 @@
 #include "product.h"
-#include <sstream>
 
 Product::Product(int ProductID, const string &pName, const string &category, const string &supplier, double price) : ProductID(ProductID),
     pName(pName),

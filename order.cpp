@@ -23,11 +23,11 @@ void Order::setCustomerID(int newCustomerID) {
     CustomerID = newCustomerID;
 }
 
-int Order::getProductIDs() const {
+int Order::getProductID() const {
     return ProductID;
 }
 
-void Order::setProductID(int &newProductID) {
+void Order::setProductID(int newProductID) {
     ProductID = newProductID;
 }
 
