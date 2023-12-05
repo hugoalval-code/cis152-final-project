@@ -15,8 +15,11 @@ public:
     explicit CustomerWindow(QWidget *parent = nullptr);
     ~CustomerWindow();
 
+private slots:
+    void writeToDatabase();
 private:
     Ui::CustomerWindow *ui;
 };
 
 #endif // CUSTOMERWINDOW_H
+

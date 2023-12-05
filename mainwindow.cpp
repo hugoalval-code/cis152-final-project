@@ -39,11 +39,11 @@ void MainWindow::initializeDatabases() {
     else
         qDebug() << "Database directory already exists. Continuing...";
 
+    // =====================================================================
+    // CREATING CUSTOMER DATABASE
     QString filePath = R"(./db/c-db.csv)";
     QFile cFile(filePath);
 
-    // =====================================================================
-    // CREATING CUSTOMER DATABASE
     if (!cFile.exists()) {
         if (cFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
             QTextStream stream(&cFile);
@@ -56,6 +56,21 @@ void MainWindow::initializeDatabases() {
     }
     else
         qDebug() << "Customer database file already exists. Continuing...";
+
+    filePath = R"(./db/c-next.txt)";
+    QFile cNextFile(filePath);
+    if (!cNextFile.exists()) {
+        if (cNextFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream stream(&cNextFile);
+            stream << "1";
+            cNextFile.close();
+            qDebug() << "Customer next-available file created successfully";
+        }
+        else
+            qWarning() << "Failed to create customer next-available file!";
+    }
+    else
+        qDebug() << "Customer next-available file already exists. Continuing...";
 
     // =====================================================================
     // CREATING PRODUCT DATABASE
@@ -74,6 +89,21 @@ void MainWindow::initializeDatabases() {
     else
         qDebug() << "Product database file already exists. Continuing...";
 
+    filePath = R"(./db/p-next.txt)";
+    QFile pNextFile(filePath);
+    if (!pNextFile.exists()) {
+        if (pNextFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream stream(&pNextFile);
+            stream << "1";
+            pNextFile.close();
+            qDebug() << "Product next-available file created successfully";
+        }
+        else
+            qWarning() << "Failed to create product next-available file!";
+    }
+    else
+        qDebug() << "Product next-available file already exists. Continuing...";
+
     // =====================================================================
     // CREATING ORDER DATABASE
     filePath = R"(./db/o-db.csv)";
@@ -90,6 +120,22 @@ void MainWindow::initializeDatabases() {
     }
     else
         qDebug() << "Order database file already exists. Continuing...";
+
+    filePath = R"(./db/o-next.txt)";
+    QFile oNextFile(filePath);
+    if (!oNextFile.exists()) {
+        if (oNextFile.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            QTextStream stream(&oNextFile);
+            stream << "1";
+            oNextFile.close();
+            qDebug() << "Order next-available file created successfully";
+        }
+        else
+            qWarning() << "Failed to create order next-available file!";
+    }
+    else
+        qDebug() << "Order next-available file already exists. Continuing...";
+
     // =====================================================================
 }
 
@@ -110,25 +156,6 @@ void MainWindow::openProductWindow() {
     productWindow->setWindowTitle("Products");
     productWindow->show();
 }
-
-// void MainWindow::writeToCDatabase() {
-//     QFile file(R"(../cis152-final-project/db/c-db.csv)");
-
-//     Customer c(1, "Hugo", "Alvarez", "xxxxxx@xxx.xxx");
-
-//     if (file.open(QIODevice::Append | QIODevice::Text)) {
-//         QTextStream stream(&file);
-//         // Convert the QStringList to a comma-separated string
-//         QString row = QString::fromStdString(c.toString()) + '\n';
-//         // Append the row to the CSV file
-//         stream << row;
-
-//         file.close();
-//         qDebug() << "Data appended to CSV file successfully.";
-//     } else qDebug() << "Error opening the CSV file for appending." << file.errorString();
-// }
-
-// void MainWindow::writeToPDatabase(Product product) {}
 
 MainWindow::~MainWindow()
 {
