@@ -17,6 +17,9 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 private slots:
+    void openCustomerWindow();
+    void openProductWindow();
+    void openOrderWindow();
     void writeToCDatabase();
     void writeToPDatabase(Product product);
 private:

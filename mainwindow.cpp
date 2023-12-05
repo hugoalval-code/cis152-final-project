@@ -8,29 +8,39 @@
 #include <QFile>
 #include <QDir>
 #include <QPushButton>
-#include <iostream>
-#include <fstream>
-#include <filesystem>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    ui->verticalLayout->setSizeConstraint(QLayout::SetMinimumSize);
-    this->setLayout(ui->verticalLayout);
+    ui->main_area->setSizeConstraint(QLayout::SetMinimumSize);
+    this->setLayout(ui->main_area);
 
-    Product p(1, "Product1", "Category1", "Supplier1", 12.99);
+    connect(ui->customers_btn, SIGNAL(clicked()), this, SLOT(openCustomerWindow()));
+    connect(ui->products_btn, SIGNAL(clicked()), this, SLOT(openProductWindow()));
+    connect(ui->orders_btn, SIGNAL(clicked()), this, SLOT(openOrderWindow()));
+}
 
-    QLabel *productLabel = new QLabel;
-    productLabel->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Minimum);
-    productLabel->setWordWrap(true);
-    productLabel->setText(QString::fromStdString(p.toString()));
-    ui->verticalLayout->addWidget(productLabel);
+void MainWindow::openCustomerWindow() {
+    QMainWindow *customerWindow = new QMainWindow(this);
+    customerWindow->setWindowTitle("Customers");
+    customerWindow->resize(400,300);
+    customerWindow->show();
+}
 
-    QPushButton *writeDBbtn = new QPushButton("Write to database", this);
-    ui->verticalLayout->addWidget(writeDBbtn);
-    connect(writeDBbtn, &QPushButton::clicked, this, &MainWindow::writeToCDatabase);
+void MainWindow::openOrderWindow() {
+    QMainWindow *orderWindow = new QMainWindow(this);
+    orderWindow->setWindowTitle("Orders");
+    orderWindow->resize(400,300);
+    orderWindow->show();
+}
+
+void MainWindow::openProductWindow() {
+    QMainWindow *productWindow = new QMainWindow(this);
+    productWindow->setWindowTitle("Products");
+    productWindow->resize(400,300);
+    productWindow->show();
 }
 
 void MainWindow::writeToCDatabase() {
