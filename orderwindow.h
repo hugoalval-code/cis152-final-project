@@ -2,6 +2,8 @@
 #define ORDERWINDOW_H
 
 #include <QMainWindow>
+#include "order.h"
+#include <list>
 
 namespace Ui {
 class OrderWindow;
@@ -16,6 +18,8 @@ public:
     ~OrderWindow();
 
 private slots:
+    list<Order> getOrders();
+    void showOrderTable();
     int getNextIdAvailable();
     void writeToDatabase();
 

@@ -26,6 +26,9 @@ public:
 
     // Misc Functions
     string toString();
+    bool operator<(const Customer& other) const {
+        return CustomerID < other.getCustomerID();
+    }
 };
 
 #endif // CUSTOMER_H

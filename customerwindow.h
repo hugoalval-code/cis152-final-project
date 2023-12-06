@@ -2,6 +2,8 @@
 #define CUSTOMERWINDOW_H
 
 #include <QMainWindow>
+#include "customer.h"
+#include <list>
 
 namespace Ui {
 class CustomerWindow;
@@ -16,6 +18,7 @@ public:
     ~CustomerWindow();
 
 private slots:
+    list<Customer> getCustomers();
     void showCustomerTable();
     int getNextIdAvailable();
     void writeToDatabase();

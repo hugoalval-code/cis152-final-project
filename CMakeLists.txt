@@ -29,6 +29,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         productwindow.h productwindow.cpp productwindow.ui
         orderwindow.h orderwindow.cpp orderwindow.ui
         order.h order.cpp
+        mergesort.h
 
 
 

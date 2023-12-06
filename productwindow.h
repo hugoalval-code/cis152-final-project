@@ -2,6 +2,8 @@
 #define PRODUCTWINDOW_H
 
 #include <QMainWindow>
+#include "product.h"
+#include <list>
 
 namespace Ui {
 class ProductWindow;
@@ -16,6 +18,8 @@ public:
     ~ProductWindow();
 
 private slots:
+    list<Product> getProducts();
+    void showProductTable();
     int getNextIdAvailable();
     void writeToDatabase();
 

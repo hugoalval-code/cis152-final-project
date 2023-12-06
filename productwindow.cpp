@@ -1,6 +1,7 @@
 #include "productwindow.h"
 #include "ui_productwindow.h"
 #include "product.h"
+#include "mergesort.h"
 #include <QFile>
 
 ProductWindow::ProductWindow(QWidget *parent)
@@ -8,8 +9,67 @@ ProductWindow::ProductWindow(QWidget *parent)
     , ui(new Ui::ProductWindow) {
     ui->setupUi(this);
 
+    showProductTable();
+
     connect(ui->back_btn, SIGNAL(clicked()), this, SLOT(close()));
     connect(ui->add_btn, SIGNAL(clicked()), this, SLOT(writeToDatabase()));
+}
+
+list<Product> ProductWindow::getProducts() {
+    list<Product> products;
+    QFile file(R"(./db/p-db.csv)");
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        qFatal() << "Failed to open the file.";
+
+    QTextStream in(&file);
+
+    // Ignore the first line, since that includes the database headers.
+    if (!in.atEnd())
+        in.readLine();
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList fields = line.split(',');
+        Product product(fields[0].toInt(), fields[1].toStdString(), fields[2].toStdString(), fields[3].toStdString()
+                        , fields[4].toDouble());
+        products.push_back(product);
+    }
+
+    file.close();
+
+    return products;
+}
+
+void ProductWindow::showProductTable() {
+    // This line ensures refreshing instead of rewritting.
+    ui->productTable->clear();
+
+    // Setting table headers
+    ui->productTable->setHorizontalHeaderLabels({"ProductID", "Name", "Category", "Supplier", "Price"});
+    ui->productTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+
+    // Getting customers from database
+    list<Product> products = getProducts();
+    products = mergeSort(products);
+    ui->productTable->setRowCount(products.size());
+
+    int row = 0;
+    for (const auto& product : products) {
+        ui->productTable->insertRow(row);
+        ui->productTable->setItem(row, 0, new QTableWidgetItem(QString::number(product.getProductID())));
+        ui->productTable->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(product.getPName())));
+        ui->productTable->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(product.getCategory())));
+        ui->productTable->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(product.getSupplier())));
+        ui->productTable->setItem(row, 4, new QTableWidgetItem(QString::number(product.getPrice(), 'f', 2)));
+
+        for (int col = 0; col < ui->productTable->columnCount(); ++col)
+            ui->productTable->item(row, col)->setTextAlignment(Qt::AlignCenter);
+
+        ++row;
+    }
+
+    ui->productTable->show();
 }
 
 int ProductWindow::getNextIdAvailable() {
@@ -68,6 +128,8 @@ void ProductWindow::writeToDatabase() {
     ui->category_box->clearEditText();
     ui->supplier_edit->setText("");
     ui->price_edit->setText("");
+
+    showProductTable();
 }
 
 

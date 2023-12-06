@@ -1,5 +1,6 @@
 #include "customerwindow.h"
 #include "customer.h"
+#include "mergesort.h"
 #include "ui_customerwindow.h"
 #include <QFile>
 #include <QTableWidget>
@@ -17,16 +18,56 @@ CustomerWindow::CustomerWindow(QWidget *parent)
     connect(ui->add_btn, SIGNAL(clicked()), this, SLOT(writeToDatabase()));
 }
 
+list<Customer> CustomerWindow::getCustomers() {
+    list<Customer> customers;
+    QFile file(R"(./db/c-db.csv)");
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+        qFatal() << "Failed to open the file.";
+
+    QTextStream in(&file);
+
+    if (!in.atEnd()) {
+        in.readLine();
+    }
+
+    while (!in.atEnd()) {
+        QString line = in.readLine();
+        QStringList fields = line.split(',');
+        Customer customer(fields[0].toInt(), fields[1].toStdString(), fields[2].toStdString(), fields[3].toStdString());
+        customers.push_back(customer);
+    }
+
+    file.close();
+
+    return customers;
+}
+
 void CustomerWindow::showCustomerTable() {
+    // This line ensures refreshing instead of rewritting.
+    ui->customerTable->clear();
+
+    // Setting table headers
     ui->customerTable->setHorizontalHeaderLabels({"CustomerID", "FirstName", "LastName", "Email"});
     ui->customerTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    ui->customerTable->setRowCount(20);
 
-    for (int row = 0; row < 20; ++row) {
-        for (int col = 0; col < 4; ++col) {
-            QTableWidgetItem *item = new QTableWidgetItem(QString("Data %1-%2").arg(row + 1).arg(col + 1));
-            ui->customerTable->setItem(row, col, item);
-        }
+    // Getting customers from database
+    list<Customer> customers = getCustomers();
+    customers = mergeSort(customers);
+    ui->customerTable->setRowCount(customers.size());
+
+    int row = 0;
+    for (const auto& customer : customers) {
+        ui->customerTable->insertRow(row);
+        ui->customerTable->setItem(row, 0, new QTableWidgetItem(QString::number(customer.getCustomerID())));
+        ui->customerTable->setItem(row, 1, new QTableWidgetItem(QString::fromStdString(customer.getFName())));
+        ui->customerTable->setItem(row, 2, new QTableWidgetItem(QString::fromStdString(customer.getLName())));
+        ui->customerTable->setItem(row, 3, new QTableWidgetItem(QString::fromStdString(customer.getEmail())));
+
+        for (int col = 0; col < ui->customerTable->columnCount(); ++col)
+            ui->customerTable->item(row, col)->setTextAlignment(Qt::AlignCenter);
+
+        ++row;
     }
 
     ui->customerTable->show();
@@ -86,6 +127,8 @@ void CustomerWindow::writeToDatabase() {
     ui->fname_edit->setText("");
     ui->lname_edit->setText("");
     ui->email_edit->setText("");
+
+    showCustomerTable();
 }
 
 CustomerWindow::~CustomerWindow() {

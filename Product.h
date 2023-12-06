@@ -37,6 +37,9 @@ public:
 
     // Misc Functions
     string toString();
+    bool operator<(const Product& other) const {
+        return ProductID < other.getProductID();
+    }
 };
 
 #endif // PRODUCT_H

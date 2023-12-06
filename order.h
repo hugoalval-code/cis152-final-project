@@ -26,6 +26,9 @@ public:
 
     // Misc. Functions
     string toString();
+    bool operator<(const Order& other) const {
+        return OrderID < other.getOrderID();
+    }
 };
 
 #endif // ORDER_H
