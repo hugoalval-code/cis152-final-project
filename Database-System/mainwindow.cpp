@@ -9,16 +9,22 @@
 #include <QFile>
 #include <QDir>
 #include <QPushButton>
+#include <QTimer>
+#include <QDateTime>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow) {
     ui->setupUi(this);
 
-    ui->main_area->setSizeConstraint(QLayout::SetMinimumSize);
-    this->setLayout(ui->main_area);
-
     initializeDatabases();
+
+    ui->clock->setDigitCount(8);
+    ui->clock->setSegmentStyle(QLCDNumber::Flat);
+    QTimer *timer = new QTimer(this);
+    connect(timer, &QTimer::timeout, this, &MainWindow::updateDateTime);
+    timer->start(1000);
+    updateDateTime();
 
     connect(ui->customers_btn, SIGNAL(clicked()), this, SLOT(openCustomerWindow()));
     connect(ui->products_btn, SIGNAL(clicked()), this, SLOT(openProductWindow()));
@@ -157,8 +163,13 @@ void MainWindow::openProductWindow() {
     productWindow->show();
 }
 
-MainWindow::~MainWindow()
-{
+void MainWindow::updateDateTime() {
+    // Get current time
+    QTime currentTime = QTime::currentTime();
+    ui->clock->display(currentTime.toString("hh:mm:ss"));
+}
+
+MainWindow::~MainWindow() {
     delete ui;
 }
 

@@ -19,6 +19,7 @@ private slots:
     void openCustomerWindow();
     void openProductWindow();
     void openOrderWindow();
+    void updateDateTime();
 private:
     Ui::MainWindow *ui;
 };
