@@ -1,5 +1,24 @@
+
+/***************************************************************
+* Name : Final Project
+* Author: Hugo Alvarez Valdivia
+* Course: CIS 152 - Data Structures
+* Version: 1.0
+* OS: Mac OSX
+* IDE: QT
+* Copyright : This is my own original work
+* based on specifications issued by our instructor
+* Description : Database system to manage a business' customers,
+*               products, as well as order tracking.
+* Academic Honesty: I attest that this is my original work.
+* I have not used unauthorized source code, either modified or
+* unmodified. I have not given other fellow student(s) access
+* to my program.
+***************************************************************/
+
 #include "order.h"
 
+// CONSTRUCTOR
 Order::Order(int oid, int cid, int pid, string purchaseDate) {
     OrderID = oid;
     CustomerID = cid;
@@ -7,6 +26,8 @@ Order::Order(int oid, int cid, int pid, string purchaseDate) {
     PurchasedDate = purchaseDate;
 }
 
+// --------------------------------------------------------------
+// GETTERS AND SETTERS
 int Order::getOrderID() const {
     return OrderID;
 }
@@ -38,7 +59,15 @@ string Order::getPurchasedDate() const {
 void Order::setPurchasedDate(const string &newPurchasedDate) {
     PurchasedDate = newPurchasedDate;
 }
+// --------------------------------------------------------------
 
+/**
+ * @brief This function converts an order's data into
+ * a formatted string that is separated by commas, which
+ * facilitates input into CSV file.
+ *
+ * @returns comma-separated string with order's data.
+ */
 string Order::toString() {
     string orderStr = "";
     orderStr += to_string(OrderID) + ",";
