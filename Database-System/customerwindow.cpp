@@ -192,6 +192,7 @@ void CustomerWindow::writeToDatabase() {
             file.close();
             qDebug() << "Data appended to CSV file successfully.";
         } else qDebug() << "Error opening the CSV file for appending." << file.errorString();
+        ui->errorMessage->setText("");
     }
 
     // Finally, reset the text inside the QTextEdit widgets

@@ -38,6 +38,7 @@ private:
         out << fixed << value;
         return std::move(out).str();
     }
+
 public:
     // Constructor
     Product(int ProductID, const string &pName, const string &category, const string &supplier, double price);
